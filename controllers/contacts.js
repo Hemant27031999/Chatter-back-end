@@ -1,6 +1,5 @@
 const handleContacts = (db, bcrypt) => (req, res) => {
 
-	
 				db.select('*').from('rukefriends')
 				.then(friends => {
 					res.json(friends);

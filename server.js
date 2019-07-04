@@ -9,6 +9,10 @@ const register = require('./controllers/register');
 const contacts = require('./controllers/contacts');
 const msges = require('./controllers/msges');
 const newmsges = require('./controllers/newmsges');
+const userfrienddatabase = require('./controllers/userfrienddatabase');
+const frndrqst = require('./controllers/frndrqst');
+const showfrndrqst = require('./controllers/showfrndrqst');
+const confirmfrndrqst = require('./controllers/confirmfrndrqst');
 
 const db = knex({
   client: 'pg',
@@ -38,6 +42,14 @@ app.post('/register', register.handleRegister(db, bcrypt))
 app.post('/msges', msges.handleMsges(db, bcrypt))
 
 app.post('/newmsges', newmsges.handleNewmsges(db, bcrypt))
+
+app.post('/userfriend', userfrienddatabase.handleUserfriend(db, bcrypt))
+
+app.post('/frndrqst', frndrqst.handleFrndrqst(db, bcrypt))
+
+app.post('/showfrndrqst', showfrndrqst.handleShowfrndrqst(db, bcrypt))
+
+app.post('/confirmfrndrqst', confirmfrndrqst.handleConfirmfrndrqst(db, bcrypt))
 
 app.listen(3000, () => {
 	console.log('app is running on port 3000');
