@@ -1,5 +1,5 @@
 const handleRegister = (db, bcrypt) => (req, res) => {
-	const { name, email, password } = req.body;
+	const { name, email, password, imageurl } = req.body;
 
 	if(!name || !email || !password){
 		return res.status(400).json('Incorrect form Submission !!!');
@@ -13,7 +13,8 @@ const handleRegister = (db, bcrypt) => (req, res) => {
 			email: email,
 			name: name,
 			password: password,
-			joined: new Date()
+			joined: new Date(),
+			imageurl: imageurl
 		})
 		.then(user => {
 			db.schema.createTable(`${name}friends`, function (table) {
