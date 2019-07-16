@@ -1,25 +1,36 @@
 const handleNewmsges = (db, bcrypt) => (req, res) => {
 
-			const { name, msg} = req.body;
+			const { name, msg, toperson } = req.body;
 
 			var database = "rukefriendyoung";
 
-			console.log(name+" "+msg+" "+database);
-
-			if( !msg || !database || !name ){
+			if( !database || !name ){
 				return res.status(400).json('Error sending msg !!!');
 			}
 	
-			return db(database).insert({name: name , msg: msg , time: new Date()})
-			.returning('*')
-			.then(function (response) {
+			if(msg === "@nomsg@"){
 				db.select('*').from(database)
 				.then(msges => {
 					res.json(msges);
 				})
 				.catch(err => res.status(400).json('unable to get msges'))
+			}
+			else{
+			return db(database).insert({name: name , msg: msg , time: new Date()})
+			.returning('*')
+			.then(function (response) {
+				db.select('*').from(database)
+				.then(msges => {
+					// console.log(`${toperson}-channel`);
+					// pusher.trigger(`${toperson}-channel`, 'my-event', {
+					//   "database": database
+					// });
+					res.json(msges);
+				})
+				.catch(err => res.status(400).json('unable to get msges! Damn it !!!'))
 			})
 			.catch(err => res.status(400).json('unable to get msges'))
+		}
 
 }
 
