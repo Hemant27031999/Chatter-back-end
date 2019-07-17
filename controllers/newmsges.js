@@ -1,4 +1,4 @@
-const handleNewmsges = (db, bcrypt) => (req, res) => {
+const handleNewmsges = (db, bcrypt, pusher) => (req, res) => {
 
 			const { name, msg, toperson } = req.body;
 
@@ -22,9 +22,9 @@ const handleNewmsges = (db, bcrypt) => (req, res) => {
 				db.select('*').from(database)
 				.then(msges => {
 					// console.log(`${toperson}-channel`);
-					// pusher.trigger(`${toperson}-channel`, 'my-event', {
-					//   "database": database
-					// });
+					 pusher.trigger('my-channel', 'my-event', {
+					  "database": database
+					});
 					res.json(msges);
 				})
 				.catch(err => res.status(400).json('unable to get msges! Damn it !!!'))
