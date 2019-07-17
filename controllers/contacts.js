@@ -2,7 +2,7 @@ const handleContacts = (db, bcrypt, pusher) => (req, res) => {
 
 				db.select('*').from('rukefriends')
 				.then(friends => {
-					pusher.trigger('my-channel', 'my-event', {
+					 pusher.trigger('my-channel', 'my-event', {
 					  "message": "hello world"
 					});
 					res.json(friends);
