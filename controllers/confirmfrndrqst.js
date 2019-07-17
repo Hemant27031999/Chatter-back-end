@@ -19,11 +19,27 @@ const handleConfirmfrndrqst = (db, bcrypt) => (req, res) => {
 				})
 				.then(data => {
 					if(data.command){
-					res.json(result);
-				}
+						db.select('*').from('chatterusers')
+						.where( 'name', '=', fromperson )
+						.then(info => {
+
+							return db(`${toperson}friends`)
+							.insert({ name: info[0].name,
+									  email: info[0].email, 
+									  imageurl: info[0].imageurl,
+									  lastmsg: new Date(),
+									  msgdata: `${fromperson}friend${toperson}` 
+									})
+							.returning('*')
+							.then(function (response) {
+									res.json(response);
+							})
+							.catch(err => res.status(400).json(`unable to save data ${toperson}friend`))
+						})
+						.catch(err => { res.json("Unable to get info !!!") })
+					}
 				})
 				.catch(err => { res.json("Unable to make database !!!") })
-				
 			})
 			.catch(err => res.json("Unable to confirm frndrqst !!!"))
 

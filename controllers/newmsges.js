@@ -21,8 +21,7 @@ const handleNewmsges = (db, bcrypt, pusher) => (req, res) => {
 			.then(function (response) {
 				db.select('*').from(database)
 				.then(msges => {
-					// console.log(`${toperson}-channel`);
-					 pusher.trigger('my-channel', 'my-event', {
+					 pusher.trigger(`${toperson}-channel`, 'my-event', {
 					  "database": database
 					});
 					res.json(msges);
