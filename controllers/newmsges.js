@@ -1,8 +1,9 @@
-const handleNewmsges = (db, bcrypt) => (req, res) => {
+const handleNewmsges = (db, bcrypt, pusher) => (req, res) => {
 
-			const { name, msg, toperson } = req.body;
+			const { name, msg, toperson, database, email } = req.body;
 
-			var database = "rukefriendyoung";
+			console.log(email);
+			console.log(`${email}-channel`);
 
 			if( !database || !name ){
 				return res.status(400).json('Error sending msg !!!');
@@ -16,22 +17,30 @@ const handleNewmsges = (db, bcrypt) => (req, res) => {
 				.catch(err => res.status(400).json('unable to get msges'))
 			}
 			else{
-			return db(database).insert({name: name , msg: msg , time: new Date()})
+			return db(database)
+			.insert({name: name , msg: msg , time: new Date()})
 			.returning('*')
 			.then(function (response) {
 				db.select('*').from(database)
 				.then(msges => {
-					// console.log(`${toperson}-channel`);
-					// pusher.trigger(`${toperson}-channel`, 'my-event', {
-					//   "database": database
-					// });
-					res.json(msges);
+
+					 db('rukefriends')
+					  .whereIn('name', [name, toperson])
+					  .update({
+					    lastmsg: new Date()
+					  })
+					  .then(data => {
+						 pusher.trigger(`${email}-channel`, 'my-event', {
+						  "database": database
+						});
+						res.json(msges);
+					  })
+
 				})
 				.catch(err => res.status(400).json('unable to get msges! Damn it !!!'))
 			})
 			.catch(err => res.status(400).json('unable to get msges'))
 		}
-
 }
 
 module.exports = {

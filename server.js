@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
 	res.send('It is working well!');
 }) 
 
-app.post('/contacts', contacts.handleContacts(db, bcrypt, pusher))
+app.post('/contacts', contacts.handleContacts(db, bcrypt))
 
 app.post('/signin', signin.handleSignin(db, bcrypt))
 
@@ -51,7 +51,7 @@ app.post('/register', register.handleRegister(db, bcrypt))
 
 app.post('/msges', msges.handleMsges(db, bcrypt))
 
-app.post('/newmsges', newmsges.handleNewmsges(db, bcrypt))
+app.post('/newmsges', newmsges.handleNewmsges(db, bcrypt, pusher))
 
 app.post('/userfriend', userfrienddatabase.handleUserfriend(db, bcrypt))
 
