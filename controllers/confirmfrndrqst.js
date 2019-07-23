@@ -11,7 +11,7 @@ const handleConfirmfrndrqst = (db, bcrypt) => (req, res) => {
 		  	.where( { fromperson: fromperson } )
 		  	.del()
 			.then(result => {
-				db.schema.createTable(`${fromperson}friend${toperson}`, function (table) {
+				db.schema.createTable(`${fromperson}friend${toperson}`.toLowerCase(), function (table) {
 				  table.increments('id');
 				  table.string('name');
 				  table.string('msg');
@@ -22,8 +22,7 @@ const handleConfirmfrndrqst = (db, bcrypt) => (req, res) => {
 						db.select('*').from('chatterusers')
 						.where( 'name', '=', fromperson )
 						.then(info => {
-
-							return db(`${toperson}friends`)
+							return db(`${toperson}friends`.toLowerCase())
 							.insert({ name: info[0].name,
 									  email: info[0].email, 
 									  imageurl: info[0].imageurl,

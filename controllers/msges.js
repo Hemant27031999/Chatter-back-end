@@ -6,7 +6,7 @@ const handleMsges = (db, bcrypt) => (req, res) => {
 				return res.status(400).json('Error getting msges out');
 			}
 	
-				db.select('*').from(database)
+				db.select('*').from(database.toLowerCase())
 				.then(msges => {
 					res.json(msges);
 			})

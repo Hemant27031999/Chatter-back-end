@@ -7,7 +7,7 @@ const handleUserfriend = (db, bcrypt) => (req, res) => {
 
 	console.log(name);
 
-	db.schema.createTable(`${name}friends`, function (table) {
+	db.schema.createTable(`${name}friends`.toLowerCase(), function (table) {
 	  table.increments('id');
 	  table.string('name');
 	  table.string('email');

@@ -1,6 +1,11 @@
 const handleContacts = (db, bcrypt) => (req, res) => {
 
-				db.select('*').from('rukefriends')
+				const { name } = req.body;
+				console.log(`${name}friends`.toLowerCase());
+
+				var database = `${name}friends`.toLowerCase();
+
+				db.select('*').from(database)
 				.then(friends => {
 					res.json(friends);
 				})
