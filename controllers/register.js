@@ -22,7 +22,7 @@ const handleRegister = (db, bcrypt) => (req, res) => {
 			  table.string('name');
 			  table.string('email');
 			  table.string('imageurl');
-			  table.timestamps('lastmsg');
+			  table.timestamp('lastmsg');
 			  table.string('msgdata');
 			})
 			.then(data => {

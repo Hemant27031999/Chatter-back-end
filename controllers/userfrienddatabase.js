@@ -12,7 +12,7 @@ const handleUserfriend = (db, bcrypt) => (req, res) => {
 	  table.string('name');
 	  table.string('email');
 	  table.string('imageurl');
-	  table.timestamps('lastmsg');
+	  table.timestamp('lastmsg');
 	  table.string('magdata');
 	})
 	.then(data => {

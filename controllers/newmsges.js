@@ -27,11 +27,14 @@ const handleNewmsges = (db, bcrypt, pusher) => (req, res) => {
 					    lastmsg: new Date()
 					  })
 					  .then(data => {
-						 pusher.trigger(`${email}-channel`, 'my-event', {
+					  	console.log(data);
+					  	console.log(`${email}-channel`);
+ 						pusher.trigger(`${email}-channel`, 'my-event', {
 						  "database": database
 						});
 						res.json(msges);
 					  })
+					  .catch(err => res.status(400).json('unable to get msges! Damn it 123!!!'))
 				})
 				.catch(err => res.status(400).json('unable to get msges! Damn it !!!'))
 			})
@@ -42,3 +45,8 @@ const handleNewmsges = (db, bcrypt, pusher) => (req, res) => {
 module.exports = {
 	handleNewmsges: handleNewmsges
 }
+
+
+ // pusher.trigger(`${email}-channel`, 'my-event', {
+	// 					  "database": database
+	// 					});

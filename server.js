@@ -26,6 +26,7 @@ const db = knex({
   }
 }); 
 
+
 var pusher = new Pusher({
 				  appId: '816891',
 				  key: '7c4198eef984dd85a08e',
@@ -38,6 +39,14 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(cors())
+
+// var channels_client = new Pusher({
+//   appId: '831858',
+//   key: 'd29496a4b6da7ece45f8',
+//   secret: '712addc6f8f998dba339',
+//   cluster: 'ap2',
+//   useTLS: true
+// });
 
 app.get('/', (req, res) => {
 	res.send('It is working well!');
