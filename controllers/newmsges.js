@@ -6,6 +6,9 @@ const handleNewmsges = (db, bcrypt, pusher) => (req, res) => {
 				return res.status(400).json('Error sending msg !!!');
 			}
 	
+			var databasename = `${name}friends`;
+			databasename = databasename.toLowerCase();
+
 			if(msg === "@nomsg@"){
 				db.select('*').from(database.toLowerCase())
 				.then(msges => {
