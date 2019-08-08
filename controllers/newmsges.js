@@ -23,21 +23,30 @@ const handleNewmsges = (db, bcrypt, pusher) => (req, res) => {
 			.then(function (response) {
 				db.select('*').from(database.toLowerCase() )
 				.then(msges => {
-
-					 db('rukefriends')
+					
+					 db(`${name}friends`.toLowerCase())
 					  .whereIn('name', [name, toperson])
 					  .update({
 					    lastmsg: new Date()
 					  })
-					  .then(data => {
-					  	console.log(data);
-					  	console.log(`${email}-channel`);
- 						pusher.trigger(`${email}-channel`, 'my-event', {
-						  "database": database
-						});
-						res.json(msges);
-					  })
-					  .catch(err => res.status(400).json('unable to get msges! Damn it 123!!!'))
+					  .then(data1 => {
+
+					  	db(`${toperson}friends`.toLowerCase())
+						  .whereIn('name', [name, toperson])
+						  .update({
+						    lastmsg: new Date()
+						  })
+						  .then(data2 => {
+						  	console.log(data2);
+						  	console.log(`${email}-channel`);
+	 						pusher.trigger(`${email}-channel`, 'my-event', {
+							  "database": database
+							});
+							res.json(msges);
+						  })
+						  .catch(err => res.status(400).json('unable to get msges! Damn it 12345!!!'))
+					})
+					.catch(err => res.status(400).json('unable to get msges! Damn it 123!!!'))
 				})
 				.catch(err => res.status(400).json('unable to get msges! Damn it !!!'))
 			})
