@@ -72,6 +72,6 @@ app.post('/confirmfrndrqst', confirmfrndrqst.handleConfirmfrndrqst(db, bcrypt))
 
 app.post('/allusers', allusers.handleAllusers(db, bcrypt))
 
-app.listen(3000, () => {
-	console.log('app is running on port 3000');
+app.listen(process.env.PORT || 3000, () => {
+	console.log(`app is running on port 3000 ${process.env.PORT}`);
 }) 
