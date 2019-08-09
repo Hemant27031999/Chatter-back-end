@@ -1,4 +1,4 @@
-const handleRegister = (db, bcrypt) => (req, res, next) => {
+const handleRegister = (db, bcrypt) => (req, res) => {
 	const { name, email, password, imageurl } = req.body;
 
 	if(!name || !email || !password){
@@ -27,12 +27,7 @@ const handleRegister = (db, bcrypt) => (req, res, next) => {
 			})
 			.then(data => {
 				if(data.command){
-					res.header("Access-Control-Allow-Origin", '*');
-				    res.header("Access-Control-Allow-Credentials", true);
-				    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-				    res.header("Access-Control-Allow-Headers", 'Origin,X-Requested-With,Content-Type,Accept,content-type,application/json');
-				    next();
-					res.json(user[0]);
+				res.json(user[0]);
 			}
 			})
 			.catch(err => { res.json("Unable to make database !!!") })
