@@ -7,8 +7,7 @@ const handleContacts = (db, bcrypt) => (req, res) => {
 				//   "message": "hello world"
 				// });
 
-
-				var database = `${name}friends`.toLowerCase();
+				var database = `${name}friends`.toLowerCase().replace(/ +/g, "");
 
 				db.select('*')
 				.from(database)

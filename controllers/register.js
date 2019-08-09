@@ -17,7 +17,7 @@ const handleRegister = (db, bcrypt) => (req, res) => {
 			imageurl: imageurl
 		})
 		.then(user => {
-			db.schema.createTable(`${name}friends`.toLowerCase(), function (table) {
+			db.schema.createTable(`${name}friends`.toLowerCase().replace(/ +/g, "") , function (table) {
 			  table.increments('id');
 			  table.string('name');
 			  table.string('email');

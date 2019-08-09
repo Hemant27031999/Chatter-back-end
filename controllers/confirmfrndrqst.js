@@ -11,7 +11,7 @@ const handleConfirmfrndrqst = (db, bcrypt) => (req, res) => {
 		  	.where( { fromperson: fromperson } )
 		  	.del()
 			.then(result => {
-				db.schema.createTable(`${fromperson}friend${toperson}`.toLowerCase(), function (table) {
+				db.schema.createTable(`${fromperson}friend${toperson}`.toLowerCase().replace(/ +/g, ""), function (table) {
 				  table.increments('id');
 				  table.string('name');
 				  table.string('msg');
@@ -22,7 +22,7 @@ const handleConfirmfrndrqst = (db, bcrypt) => (req, res) => {
 						db.select('*').from('chatterusers')
 						.where( 'name', '=', fromperson )
 						.then(info => {
-							db(`${toperson}friends`.toLowerCase())
+							db(`${toperson}friends`.toLowerCase().replace(/ +/g, ""))
 							.insert({ name: info[0].name,
 									  email: info[0].email, 
 									  imageurl: info[0].imageurl,
@@ -35,12 +35,12 @@ const handleConfirmfrndrqst = (db, bcrypt) => (req, res) => {
 									db.select('*').from('chatterusers')
 									.where( 'name', '=', toperson )
 									.then(notrqrddata => {
-										return db(`${fromperson}friends`.toLowerCase())
+										return db(`${fromperson}friends`.toLowerCase().replace(/ +/g, ""))
 										.insert({ name: notrqrddata[0].name,
 												  email: notrqrddata[0].email, 
 												  imageurl: notrqrddata[0].imageurl,
 												  lastmsg: new Date(),
-												  msgdata: `${fromperson}friend${toperson}` 
+												  msgdata: `${fromperson}friend${toperson}`.toLowerCase().replace(/ +/g, "") 
 												})
 										.returning('*')
 										.then(function (response123) {
