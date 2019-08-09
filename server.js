@@ -23,7 +23,7 @@ const db = knex({
     ssl: true
   }
 }); 
-socket = io.listen(process.env.PORT);
+// socket = io.listen(process.env.PORT);
 
 var pusher = new Pusher({
 				  appId: '816891',
