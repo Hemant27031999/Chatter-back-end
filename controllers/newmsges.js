@@ -20,7 +20,7 @@ const handleNewmsges = (db, bcrypt, pusher) => (req, res) => {
 			.then(function (response) {
 				db.select('*').from(database.toLowerCase().replace(/ +/g, "")  )
 				.then(msges => {
-					
+
 					 db(`${name}friends`.toLowerCase().replace(/ +/g, "") )
 					  .whereIn('name', [name, toperson])
 					  .update({
@@ -37,7 +37,8 @@ const handleNewmsges = (db, bcrypt, pusher) => (req, res) => {
 						  	console.log(data2);
 						  	console.log(`${email}-channel`);
 	 						pusher.trigger(`${email}-channel`, 'my-event', {
-							  "database": database
+							  "database": database,
+								"fromPerson": name
 							});
 							res.json(msges);
 						  })
